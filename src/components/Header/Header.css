@@ -1,0 +1,13 @@
+.Header {
+    background-color: green;
+    height: 75px;
+    position: relative;
+
+}
+
+.refarmed-logo {
+    height: 40px;
+    position: absolute;
+    left: 0;
+    
+}
