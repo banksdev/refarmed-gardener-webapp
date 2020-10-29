@@ -4,6 +4,12 @@ import Grid from './components/Grid/Grid'
 import  firebase from './services/firebase';
 import React, { useState, useEffect } from 'react';
 
+import GoodBG from './resources/good-bg.svg'
+import BadBG from './resources/bad-bg.svg'
+
+
+const hasThings = []
+
 
 function App() {
 
@@ -11,6 +17,23 @@ function App() {
   const [loading, setLoading] = useState(false)
 
   const ref = firebase.firestore().collection("crops")
+
+  // Initializes test data
+  // function initialize() {
+  //   hasThings.push(1)
+  //   for (let i = 0; i < 25; i++) {
+  //     ref.add({
+  //       isBad: false
+  
+  //     })
+  //   }
+  // }
+
+  // if (hasThings.length === 0) {
+  //   console.log("INITIALIZING")
+  //   initialize()
+  // }
+  
 
   function getCrops() {
     setLoading(true);
@@ -28,10 +51,14 @@ function App() {
     getCrops();
   }, []);
 
+  const hasBadCrops = crops.filter(c => c.isBad).length > 0
+
   return (
-    <div className="App">
+    <div className="App" >
       <Header />
       <Grid crops={crops} />
+
+      <img className="backgroundImage" src={hasBadCrops ? BadBG : GoodBG}/>
 
     </div>
   );
