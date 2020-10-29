@@ -1,7 +1,9 @@
 import './App.css';
 import Header from './components/Header/Header';
+import Grid from './components/Grid/Grid'
 import  firebase from './services/firebase';
 import React, { useState, useEffect } from 'react';
+
 
 function App() {
 
@@ -22,14 +24,6 @@ function App() {
     });
   }
 
-  function generateCropBox() {
-    return (
-      <div class="crop-box">
-
-      </div>
-    );
-  }
-
   useEffect(() => {
     getCrops();
   }, []);
@@ -37,17 +31,8 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <div className="crop-grid">
-        {
-          crops.map((crop) => (
-            <div key={crop.id} className="crop-box" style={{backgroundColor: crop.isBad ? "red" : "green"}}>
-              <h1>{crop.cropType}</h1>
-              <p>{crop.isBad ? "BAD" : "GOOD"}</p>
-            </div>
-          ))
-        }
+      <Grid crops={crops} />
 
-      </div>
     </div>
   );
 }
