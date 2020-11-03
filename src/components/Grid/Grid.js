@@ -1,10 +1,13 @@
 import './Grid.css';
 import React from 'react'
 
-const Grid = (props) => {
+function Grid(props) {
+    const badCrops = props.crops.filter(c => c.isBad);
+    const badLevel = badCrops.length > 0 ? badCrops[0].layer : null;
+
     return (
         <div className="grid-container">
-            <h1>Hello John</h1>
+            <h1>{badCrops.length > 0 ? "Something is wrong at layer " + badLevel : "Hello John, \neverything looks good! 🌱" }</h1>
             <div className="crop-grid">
             {
                 props.crops.map((crop) => (

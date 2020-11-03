@@ -1,66 +1,24 @@
 import './App.css';
 import Header from './components/Header/Header';
-import Grid from './components/Grid/Grid'
-import  firebase from './services/firebase';
-import React, { useState, useEffect } from 'react';
-
-import GoodBG from './resources/good-bg.svg'
-import BadBG from './resources/bad-bg.svg'
-
-
-const hasThings = []
-
+import Home from './pages/Home/Home';
+import History from './pages/History/History'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
 
-  const [crops, setCrops] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  const ref = firebase.firestore().collection("crops")
-
-  // Initializes test data
-  // function initialize() {
-  //   hasThings.push(1)
-  //   for (let i = 0; i < 25; i++) {
-  //     ref.add({
-  //       isBad: false
-  
-  //     })
-  //   }
-  // }
-
-  // if (hasThings.length === 0) {
-  //   console.log("INITIALIZING")
-  //   initialize()
-  // }
-  
-
-  function getCrops() {
-    setLoading(true);
-    ref.onSnapshot((querySnapshot) => {
-      const items = [];
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data())
-      })
-      setCrops(items);
-      setLoading(false);
-    });
-  }
-
-  useEffect(() => {
-    getCrops();
-  }, []);
-
-  const hasBadCrops = crops.filter(c => c.isBad).length > 0
 
   return (
-    <div className="App" >
-      <Header />
-      <Grid crops={crops} />
+    <Router>
+      <div className="App" >
+        <Header />
 
-      <img className="backgroundImage" src={hasBadCrops ? BadBG : GoodBG}/>
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route path='/history' component={History} />
+        </Switch>
 
-    </div>
+      </div>
+    </Router>
   );
 }
 
