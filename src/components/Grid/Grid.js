@@ -1,5 +1,21 @@
 import './Grid.css';
-import React from 'react'
+import React from 'react';
+import firebase from '../../services/firebase';
+
+const ref = firebase.firestore().collection("crops")
+
+const setCropToBad = (id) => {
+    ref.doc(`crop_${id}`).update({
+        isBad: true
+    })
+}
+
+const setCropToGood = (id) => {
+    ref.doc(`crop_${id}`).update({
+        isBad: false
+    })
+}
+
 
 function groupBy(list, keyGetter) {
     const map = new Map();
@@ -22,7 +38,7 @@ const buildCropLayer = (layer) => {
             <p>{`Layer ${layer[0]}`}</p>
             {
                 layer[1].map(c => (
-                    <div className="crop-box" style={{backgroundColor: c.isBad ? "red" : "green"}}>
+                    <div onClick={c.isBad ? () => { setCropToGood(c.id) } : () => { setCropToBad(c.id) }} className="crop-box" style={{backgroundColor: c.isBad ? "red" : "green"}}>
 
                     </div>
                 ))
